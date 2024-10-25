@@ -143,6 +143,7 @@ GEM
     nio4r (2.7.3)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
+    pg (1.5.9)
     psych (5.1.2)
       stringio
     public_suffix (6.0.1)
@@ -241,6 +242,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  pg (~> 1.4)
   puma (>= 5.0)
   rails (~> 7.1.4, >= 7.1.4.1)
   selenium-webdriver
