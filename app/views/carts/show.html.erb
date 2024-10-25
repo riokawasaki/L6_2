@@ -1,0 +1,29 @@
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
+
+<h2>カート一覧</h2>
+<% grouped_cartitems = @cartitems.group_by(&:product_id) %>
+<% grouped_cartitems.each do |product_id, items| %>
+  <% product = items.first.product %> <!-- 最初のアイテムから商品を取得 -->
+  <% total_qty = items.sum(&:qty) %> <!-- 合計数量を計算 -->
+  
+  商品名：<%= product.name %>, 
+  価格：<%= product.price %>, 
+  数量：<%= total_qty %><br>
+
+  <%= form_with url: cartitem_path(items.first), method: :delete, local: true do %>
+    <%= label_tag :qty, "カートから削除する数量:" %>
+    <%= number_field_tag :qty, nil, min: 1, max: total_qty %>
+    <%= submit_tag '削除' %>
+  <% end %>
+  <br><hr>
+<% end %>
+
+<% if @cartitems.any? %>
+  <h3>合計金額: <%= @cartitems.sum { |item| item.product.price * item.qty } %> 円</h3>
+<% else %>
+  <h3>カートは空です。</h3>
+<% end %>
+
+<%= link_to "商品一覧に戻る", root_path %>

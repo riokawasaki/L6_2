@@ -1,0 +1,27 @@
+<% if @cart_item.present? && @cart_item.errors.any? %>
+  <h3>エラーがあります。</h3>
+  <ul>
+    <% @cart_item.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h2>商品を追加</h2>
+<%= form_with model: @cart_item, url: cartitems_path do |f| %>
+  <p>
+    <%= f.label :name, '商品名' %>
+    <%= @product.name %>  <!-- 商品名を表示 -->
+  </p>
+  <p>
+    <%= f.label :price, '値段' %>
+    <%= @product.price %>  <!-- 商品の価格を表示 -->
+  </p>
+  <p>
+    <%= f.label :qty, '数量 ' %>
+    <%= f.number_field :qty, value: @cart_item.qty %>  <!-- 数量の入力フィールド -->
+  </p>
+
+  <%= f.hidden_field :product_id, value: @product.id %> <!-- 隠しフィールドに商品IDを設定 -->
+  <%= f.submit 'カートに入れる' %>
+<% end %>
